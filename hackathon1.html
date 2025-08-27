@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-India Campaign Detector Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            max-width: 600px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .search-button {
+            background-color: #2563eb;
+            color: white;
+            padding: 1rem 2rem;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .search-button:hover {
+            background-color: #1d4ed8;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="text-gray-800">
+
+    <!-- Chosen Palette: Warm Gray, Deep Sea, Azure -->
+    <!-- Application Structure Plan: The application is structured as a single-page dashboard. A central grid layout divides the page into a control panel on the left and a dynamic results area on the right. The left side provides the core context (problem, solution) and the primary user interaction point (search bar). The right side dynamically populates with a simulated campaign summary and data visualizations upon user action. A separate section at the bottom showcases the project's future scope. This structure was chosen to move from a static, linear presentation format to a task-oriented, interactive experience, where the user can actively "demo" the system and then explore the detailed information and future plans. -->
+    <!-- Visualization & Content Choices: The core interaction is a keyword search to trigger a dynamic content update, simulating the prototype demo described in the report. For "Sentiment Score," a Chart.js donut chart is used to visually represent the positive/negative sentiment split, providing an immediate visual cue for a key metric. The chart container is explicitly styled to be responsive and prevent overflow. The "Propagator Identification" is presented as a simple list. Other sections, like "The Problem" and "Future Scope," are presented as styled text blocks and lists, as their content is best consumed through reading rather than interaction. The entire application uses a responsive grid/flex layout with Tailwind CSS. NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">Anti-India Campaign Detector</h1>
+            <p class="text-lg text-gray-600">A Digital Disinformation Dashboard</p>
+        </header>
+
+        <main class="grid lg:grid-cols-3 gap-8">
+
+            <!-- Left Panel: Context and Controls -->
+            <div class="lg:col-span-1 flex flex-col gap-8">
+                
+                <!-- The Problem Section -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">The Problem: A Digital Battleground</h2>
+                    <p class="mb-4">Foreign state and non-state actors are running coordinated, large-scale disinformation campaigns to spread false narratives, incite social unrest, and erode public trust. These campaigns have real-world consequences, from social discord to economic instability.</p>
+                </div>
+                
+                <!-- Our Solution Section -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Our Solution: A Proactive Defense System</h2>
+                    <p class="mb-4">Our platform is designed to proactively identify, analyze, and counter anti-India disinformation campaigns. It provides a clear, data-driven dashboard to empower fact-checkers, journalists, and government agencies to respond effectively.</p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-600">
+                        <li>Keyword-based detection for campaign identification.</li>
+                        <li>Real-time analysis to monitor emerging narratives.</li>
+                        <li>Sentiment analysis to quantify a campaign's narrative.</li>
+                        <li>Propagator identification to pinpoint key accounts and groups.</li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <!-- Right Panel: Interactive Dashboard -->
+            <div class="lg:col-span-2 flex flex-col gap-8">
+                
+                <!-- Prototype Demo Section -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Prototype Demo: Search and Scan</h2>
+                    <p class="mb-4 text-gray-600">Enter a keyword below to simulate a scan and view a sample campaign summary.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                        <input id="searchInput" type="text" placeholder="e.g., Indian agriculture crisis" class="flex-grow p-3 rounded-lg border-2 border-gray-200 focus:outline-none focus:border-blue-500 transition-colors duration-200">
+                        <button id="scanButton" class="search-button">
+                            Scan Platforms
+                        </button>
+                    </div>
+                    
+                    <!-- Dynamic Results Area -->
+                    <div id="resultsContainer">
+                        <div class="flex items-center justify-center h-48 bg-gray-100 rounded-lg text-gray-500 text-center p-4">
+                            Your campaign results will appear here after a scan.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Future Scope Section -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Future Scope: The Road Ahead</h2>
+                    <ul class="list-disc list-inside space-y-2 text-gray-600">
+                        <li>**Advanced AI/ML Integration:** Implement NLP and Generative AI for deeper narrative analysis and trend prediction.</li>
+                        <li>**Cross-Platform Network Analysis:** Map the spread of campaigns across social media in real time.</li>
+                        <li>**Source Verification:** Integrate with fact-checking databases to quickly flag misleading content.</li>
+                        <li>**Multi-modal Analysis:** Extend the tool to analyze images and videos for manipulation.</li>
+                    </ul>
+                </div>
+
+            </div>
+            
+        </main>
+        
+        <!-- Footer -->
+        <footer class="text-center mt-12 text-gray-500 text-sm">
+            <p>&copy; 2025 National CyberShield Hackathon. All Rights Reserved.</p>
+        </footer>
+        
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const scanButton = document.getElementById('scanButton');
+            const searchInput = document.getElementById('searchInput');
+            const resultsContainer = document.getElementById('resultsContainer');
+            
+            const dummyData = {
+                'indian agriculture crisis': {
+                    title: 'Disinformation Campaign: Farmers & Policy',
+                    platform: 'Twitter/X, Reddit',
+                    narrative: 'A coordinated campaign exaggerating the impact of recent agricultural policy changes, spreading false reports of farmer suicides and food shortages to incite protest and create social division.',
+                    sentiment: { positive: 10, negative: 90 },
+                    propagators: ['@ForeignIntel1', 'AgriCrisis_Bot', 'Reddit-Spreader-Group'],
+                    searchMatch: true
+                },
+                'empty': {
+                    searchMatch: false
+                }
+            };
+            
+            function renderChart(sentimentData) {
+                const chartContainer = document.createElement('div');
+                chartContainer.className = 'chart-container mt-6';
+                const canvas = document.createElement('canvas');
+                chartContainer.appendChild(canvas);
+                
+                new Chart(canvas, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Positive Sentiment', 'Negative Sentiment'],
+                        datasets: [{
+                            data: [sentimentData.positive, sentimentData.negative],
+                            backgroundColor: ['#28a745', '#dc3545'],
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(tooltipItem) {
+                                        return `${tooltipItem.label}: ${tooltipItem.raw}%`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                return chartContainer;
+            }
+
+            scanButton.addEventListener('click', () => {
+                const query = searchInput.value.toLowerCase().trim();
+                const result = dummyData[query] || dummyData['empty'];
+                
+                if (result.searchMatch) {
+                    const campaignCard = `
+                        <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-6 shadow-md animate-fadeIn">
+                            <h3 class="text-xl font-bold text-blue-800 mb-2">Campaign Title: ${result.title}</h3>
+                            <p class="text-gray-600 mb-4"><strong>Platform:</strong> ${result.platform}</p>
+                            <p class="text-gray-700 mb-6"><strong>Narrative Summary:</strong> ${result.narrative}</p>
+                            
+                            <h4 class="text-lg font-semibold text-gray-800 mb-2">Sentiment Analysis</h4>
+                            <div id="sentimentChartContainer" class="flex justify-center"></div>
+                            
+                            <h4 class="text-lg font-semibold text-gray-800 mt-6 mb-2">Propagator Identification</h4>
+                            <ul class="list-disc list-inside text-gray-600">
+                                ${result.propagators.map(p => `<li>${p}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                    resultsContainer.innerHTML = campaignCard;
+                    const chartWrapper = document.getElementById('sentimentChartContainer');
+                    const chart = renderChart(result.sentiment);
+                    chartWrapper.appendChild(chart);
+                } else {
+                    resultsContainer.innerHTML = `
+                        <div class="mt-6 flex items-center justify-center h-48 bg-red-50 border border-red-200 rounded-lg text-red-500 text-center p-4 animate-fadeIn">
+                            No active campaigns found for that keyword.
+                        </div>
+                    `;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
