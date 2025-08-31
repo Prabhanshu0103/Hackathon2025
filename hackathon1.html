@@ -3,225 +3,287 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anti-India Campaign Detector Dashboard</title>
+    <title>Money Laundering Pattern Detector</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f7f9fc;
-        }
-        .chart-container {
-            position: relative;
-            height: 300px;
-            max-width: 600px;
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
-            }
-        }
-        .animate-fadeIn {
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .search-button {
-            background-color: #2563eb;
-            color: white;
-            padding: 1rem 2rem;
-            font-weight: bold;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .search-button:hover {
-            background-color: #1d4ed8;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            transform: translateY(-2px);
+            background-color: #0f172a;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="text-gray-800">
+<body class="bg-gray-900 text-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-gray-800 rounded-2xl shadow-xl p-8 w-full max-w-4xl space-y-8">
+        <h1 class="text-3xl md:text-4xl font-bold text-center text-teal-400">Money Laundering Detection Prototype</h1>
+        <p class="text-center text-gray-400">
+            A simple rule-based system to detect common money laundering patterns. Add transactions below and click 'Detect Patterns' to see the results.
+        </p>
 
-    <!-- Chosen Palette: Warm Gray, Deep Sea, Azure -->
-    <!-- Application Structure Plan: The application is structured as a single-page dashboard. A central grid layout divides the page into a control panel on the left and a dynamic results area on the right. The left side provides the core context (problem, solution) and the primary user interaction point (search bar). The right side dynamically populates with a simulated campaign summary and data visualizations upon user action. A separate section at the bottom showcases the project's future scope. This structure was chosen to move from a static, linear presentation format to a task-oriented, interactive experience, where the user can actively "demo" the system and then explore the detailed information and future plans. -->
-    <!-- Visualization & Content Choices: The core interaction is a keyword search to trigger a dynamic content update, simulating the prototype demo described in the report. For "Sentiment Score," a Chart.js donut chart is used to visually represent the positive/negative sentiment split, providing an immediate visual cue for a key metric. The chart container is explicitly styled to be responsive and prevent overflow. The "Propagator Identification" is presented as a simple list. Other sections, like "The Problem" and "Future Scope," are presented as styled text blocks and lists, as their content is best consumed through reading rather than interaction. The entire application uses a responsive grid/flex layout with Tailwind CSS. NO SVG graphics used. NO Mermaid JS used. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-
-    <div class="container mx-auto p-4 md:p-8">
-
-        <!-- Header -->
-        <header class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">Anti-India Campaign Detector</h1>
-            <p class="text-lg text-gray-600">A Digital Disinformation Dashboard</p>
-        </header>
-
-        <main class="grid lg:grid-cols-3 gap-8">
-
-            <!-- Left Panel: Context and Controls -->
-            <div class="lg:col-span-1 flex flex-col gap-8">
-                
-                <!-- The Problem Section -->
-                <div class="bg-white rounded-xl shadow-lg p-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4">The Problem: A Digital Battleground</h2>
-                    <p class="mb-4">Foreign state and non-state actors are running coordinated, large-scale disinformation campaigns to spread false narratives, incite social unrest, and erode public trust. These campaigns have real-world consequences, from social discord to economic instability.</p>
+        <!-- Transaction Input Section -->
+        <div class="bg-gray-700 rounded-xl p-6 space-y-4">
+            <h2 class="text-xl font-semibold text-gray-200">Add New Transaction</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div>
+                    <label for="senderId" class="block text-sm font-medium text-gray-400">Sender ID</label>
+                    <input type="text" id="senderId" placeholder="Sender ID" class="mt-1 block w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500">
                 </div>
-                
-                <!-- Our Solution Section -->
-                <div class="bg-white rounded-xl shadow-lg p-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Our Solution: A Proactive Defense System</h2>
-                    <p class="mb-4">Our platform is designed to proactively identify, analyze, and counter anti-India disinformation campaigns. It provides a clear, data-driven dashboard to empower fact-checkers, journalists, and government agencies to respond effectively.</p>
-                    <ul class="list-disc list-inside space-y-2 text-gray-600">
-                        <li>Keyword-based detection for campaign identification.</li>
-                        <li>Real-time analysis to monitor emerging narratives.</li>
-                        <li>Sentiment analysis to quantify a campaign's narrative.</li>
-                        <li>Propagator identification to pinpoint key accounts and groups.</li>
-                    </ul>
+                <div>
+                    <label for="receiverId" class="block text-sm font-medium text-gray-400">Receiver ID</label>
+                    <input type="text" id="receiverId" placeholder="Receiver ID" class="mt-1 block w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500">
                 </div>
-                
+                <div>
+                    <label for="amount" class="block text-sm font-medium text-gray-400">Amount ($)</label>
+                    <input type="number" id="amount" placeholder="Amount" class="mt-1 block w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500">
+                </div>
+                <div class="lg:col-span-2">
+                    <label for="timestamp" class="block text-sm font-medium text-gray-400">Timestamp</label>
+                    <input type="datetime-local" id="timestamp" class="mt-1 block w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500">
+                </div>
+                <div>
+                    <label for="category" class="block text-sm font-medium text-gray-400">Category</label>
+                    <select id="category" class="mt-1 block w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md text-gray-200 focus:outline-none focus:ring-teal-500 focus:border-teal-500">
+                        <option value="deposit">Deposit</option>
+                        <option value="withdrawal">Withdrawal</option>
+                        <option value="transfer">Transfer</option>
+                    </select>
+                </div>
             </div>
-            
-            <!-- Right Panel: Interactive Dashboard -->
-            <div class="lg:col-span-2 flex flex-col gap-8">
-                
-                <!-- Prototype Demo Section -->
-                <div class="bg-white rounded-xl shadow-lg p-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Prototype Demo: Search and Scan</h2>
-                    <p class="mb-4 text-gray-600">Enter a keyword below to simulate a scan and view a sample campaign summary.</p>
-                    <div class="flex flex-col sm:flex-row gap-4 mb-6">
-                        <input id="searchInput" type="text" placeholder="e.g., Indian agriculture crisis" class="flex-grow p-3 rounded-lg border-2 border-gray-200 focus:outline-none focus:border-blue-500 transition-colors duration-200">
-                        <button id="scanButton" class="search-button">
-                            Scan Platforms
-                        </button>
-                    </div>
-                    
-                    <!-- Dynamic Results Area -->
-                    <div id="resultsContainer">
-                        <div class="flex items-center justify-center h-48 bg-gray-100 rounded-lg text-gray-500 text-center p-4">
-                            Your campaign results will appear here after a scan.
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Future Scope Section -->
-                <div class="bg-white rounded-xl shadow-lg p-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Future Scope: The Road Ahead</h2>
-                    <ul class="list-disc list-inside space-y-2 text-gray-600">
-                        <li>**Advanced AI/ML Integration:** Implement NLP and Generative AI for deeper narrative analysis and trend prediction.</li>
-                        <li>**Cross-Platform Network Analysis:** Map the spread of campaigns across social media in real time.</li>
-                        <li>**Source Verification:** Integrate with fact-checking databases to quickly flag misleading content.</li>
-                        <li>**Multi-modal Analysis:** Extend the tool to analyze images and videos for manipulation.</li>
-                    </ul>
-                </div>
+            <button id="addTransactionBtn" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors">Add Transaction</button>
+        </div>
 
+        <!-- Transaction List Section -->
+        <div class="bg-gray-700 rounded-xl p-6 space-y-4">
+            <h2 class="text-xl font-semibold text-gray-200">Transaction History</h2>
+            <div id="transactionList" class="max-h-64 overflow-y-auto space-y-2">
+                <!-- Transactions will be added here dynamically -->
             </div>
-            
-        </main>
-        
-        <!-- Footer -->
-        <footer class="text-center mt-12 text-gray-500 text-sm">
-            <p>&copy; 2025 National CyberShield Hackathon. All Rights Reserved.</p>
-        </footer>
-        
+            <div class="flex flex-col md:flex-row gap-4">
+                <button id="detectPatternsBtn" class="w-full md:w-1/2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors">Detect Patterns</button>
+                <button id="clearDataBtn" class="w-full md:w-1/2 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors">Clear Data</button>
+            </div>
+        </div>
+
+        <!-- Detection Results Section -->
+        <div id="resultsSection" class="bg-gray-700 rounded-xl p-6 hidden">
+            <h2 class="text-xl font-semibold text-gray-200 mb-4">Suspicious Activity Report</h2>
+            <div id="resultsContent" class="space-y-4">
+                <!-- Detection results will be displayed here -->
+            </div>
+        </div>
+
+        <!-- Custom Alert/Modal -->
+        <div id="alertModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
+            <div class="bg-gray-800 rounded-xl p-6 w-full max-w-sm text-center shadow-lg transform transition-all scale-100 duration-300">
+                <p id="alertMessage" class="text-white text-lg font-semibold mb-4"></p>
+                <button onclick="closeAlert()" class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg font-bold">OK</button>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const scanButton = document.getElementById('scanButton');
-            const searchInput = document.getElementById('searchInput');
-            const resultsContainer = document.getElementById('resultsContainer');
-            
-            const dummyData = {
-                'indian agriculture crisis': {
-                    title: 'Disinformation Campaign: Farmers & Policy',
-                    platform: 'Twitter/X, Reddit',
-                    narrative: 'A coordinated campaign exaggerating the impact of recent agricultural policy changes, spreading false reports of farmer suicides and food shortages to incite protest and create social division.',
-                    sentiment: { positive: 10, negative: 90 },
-                    propagators: ['@ForeignIntel1', 'AgriCrisis_Bot', 'Reddit-Spreader-Group'],
-                    searchMatch: true
-                },
-                'empty': {
-                    searchMatch: false
-                }
-            };
-            
-            function renderChart(sentimentData) {
-                const chartContainer = document.createElement('div');
-                chartContainer.className = 'chart-container mt-6';
-                const canvas = document.createElement('canvas');
-                chartContainer.appendChild(canvas);
-                
-                new Chart(canvas, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Positive Sentiment', 'Negative Sentiment'],
-                        datasets: [{
-                            data: [sentimentData.positive, sentimentData.negative],
-                            backgroundColor: ['#28a745', '#dc3545'],
-                            hoverOffset: 4
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(tooltipItem) {
-                                        return `${tooltipItem.label}: ${tooltipItem.raw}%`;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-                return chartContainer;
+        const transactionStore = [];
+
+        document.getElementById('addTransactionBtn').addEventListener('click', addTransaction);
+        document.getElementById('detectPatternsBtn').addEventListener('click', detectPatterns);
+        document.getElementById('clearDataBtn').addEventListener('click', clearData);
+
+        // Helper function to show a custom alert message
+        function showAlert(message) {
+            const modal = document.getElementById('alertModal');
+            const msg = document.getElementById('alertMessage');
+            msg.textContent = message;
+            modal.classList.remove('hidden');
+        }
+
+        // Helper function to close the custom alert message
+        function closeAlert() {
+            document.getElementById('alertModal').classList.add('hidden');
+        }
+
+        function addTransaction() {
+            const senderId = document.getElementById('senderId').value;
+            const receiverId = document.getElementById('receiverId').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const timestamp = document.getElementById('timestamp').value;
+            const category = document.getElementById('category').value;
+
+            // Basic validation
+            if (!senderId || !receiverId || isNaN(amount) || amount <= 0 || !timestamp) {
+                showAlert('Please fill in all transaction fields with valid data.');
+                return;
             }
 
-            scanButton.addEventListener('click', () => {
-                const query = searchInput.value.toLowerCase().trim();
-                const result = dummyData[query] || dummyData['empty'];
-                
-                if (result.searchMatch) {
-                    const campaignCard = `
-                        <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-6 shadow-md animate-fadeIn">
-                            <h3 class="text-xl font-bold text-blue-800 mb-2">Campaign Title: ${result.title}</h3>
-                            <p class="text-gray-600 mb-4"><strong>Platform:</strong> ${result.platform}</p>
-                            <p class="text-gray-700 mb-6"><strong>Narrative Summary:</strong> ${result.narrative}</p>
-                            
-                            <h4 class="text-lg font-semibold text-gray-800 mb-2">Sentiment Analysis</h4>
-                            <div id="sentimentChartContainer" class="flex justify-center"></div>
-                            
-                            <h4 class="text-lg font-semibold text-gray-800 mt-6 mb-2">Propagator Identification</h4>
-                            <ul class="list-disc list-inside text-gray-600">
-                                ${result.propagators.map(p => `<li>${p}</li>`).join('')}
-                            </ul>
-                        </div>
+            const transaction = {
+                senderId,
+                receiverId,
+                amount,
+                timestamp: new Date(timestamp),
+                category
+            };
+
+            transactionStore.push(transaction);
+            renderTransactions();
+
+            // Clear inputs for next transaction
+            document.getElementById('senderId').value = '';
+            document.getElementById('receiverId').value = '';
+            document.getElementById('amount').value = '';
+            document.getElementById('timestamp').value = '';
+        }
+
+        function renderTransactions() {
+            const list = document.getElementById('transactionList');
+            list.innerHTML = ''; // Clear the list before re-rendering
+            if (transactionStore.length === 0) {
+                list.innerHTML = `<p class="text-center text-gray-400">No transactions added yet.</p>`;
+                return;
+            }
+
+            transactionStore.forEach(tx => {
+                const txEl = document.createElement('div');
+                txEl.className = 'bg-gray-600 p-3 rounded-lg shadow-inner flex flex-col md:flex-row justify-between items-start md:items-center text-sm';
+                txEl.innerHTML = `
+                    <div class="flex flex-col">
+                        <span class="font-bold text-teal-300">${tx.senderId} <span class="text-gray-400 font-normal">&rarr;</span> ${tx.receiverId}</span>
+                        <span class="text-gray-400 text-xs">${new Date(tx.timestamp).toLocaleString()}</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-bold text-lg text-white">$${tx.amount.toLocaleString()}</span>
+                        <span class="text-xs text-gray-400 block">${tx.category}</span>
+                    </div>
+                `;
+                list.appendChild(txEl);
+            });
+        }
+
+        function detectPatterns() {
+            if (transactionStore.length === 0) {
+                showAlert('Please add some transactions first to detect patterns.');
+                return;
+            }
+
+            const resultsContent = document.getElementById('resultsContent');
+            resultsContent.innerHTML = '';
+            document.getElementById('resultsSection').classList.remove('hidden');
+
+            const suspiciousTransactions = new Set();
+            let hasSuspiciousActivity = false;
+
+            // --- Rule 1: High-Frequency Transactions (Smurfing/Structuring) ---
+            const senderFrequency = {};
+            const highFrequencyThreshold = 5;
+            transactionStore.forEach(tx => {
+                senderFrequency[tx.senderId] = (senderFrequency[tx.senderId] || 0) + 1;
+            });
+
+            for (const sender in senderFrequency) {
+                if (senderFrequency[sender] >= highFrequencyThreshold) {
+                    const ruleDiv = document.createElement('div');
+                    ruleDiv.className = 'bg-yellow-800 p-4 rounded-lg border-l-4 border-yellow-500';
+                    ruleDiv.innerHTML = `
+                        <p class="font-semibold text-lg text-yellow-300">Potential Smurfing / Structuring Detected</p>
+                        <p class="text-yellow-200">Account <strong>${sender}</strong> made an unusually high number of transactions (${senderFrequency[sender]} transactions).</p>
                     `;
-                    resultsContainer.innerHTML = campaignCard;
-                    const chartWrapper = document.getElementById('sentimentChartContainer');
-                    const chart = renderChart(result.sentiment);
-                    chartWrapper.appendChild(chart);
-                } else {
-                    resultsContainer.innerHTML = `
-                        <div class="mt-6 flex items-center justify-center h-48 bg-red-50 border border-red-200 rounded-lg text-red-500 text-center p-4 animate-fadeIn">
-                            No active campaigns found for that keyword.
-                        </div>
-                    `;
+                    resultsContent.appendChild(ruleDiv);
+                    hasSuspiciousActivity = true;
+                }
+            }
+
+            // --- Rule 2: Round-Number Transactions ---
+            const roundNumberThreshold = 1000;
+            transactionStore.forEach((tx, index) => {
+                if (tx.amount % roundNumberThreshold === 0 && tx.amount >= roundNumberThreshold) {
+                    const txId = `${tx.senderId}-${tx.receiverId}-${tx.amount}-${index}`;
+                    if (!suspiciousTransactions.has(txId)) {
+                        const ruleDiv = document.createElement('div');
+                        ruleDiv.className = 'bg-orange-800 p-4 rounded-lg border-l-4 border-orange-500';
+                        ruleDiv.innerHTML = `
+                            <p class="font-semibold text-lg text-orange-300">Suspicious Round-Number Transaction</p>
+                            <p class="text-orange-200">Transaction from <strong>${tx.senderId}</strong> to <strong>${tx.receiverId}</strong> has a round amount of <strong>$${tx.amount}</strong>, which can be a red flag for structuring.</p>
+                        `;
+                        resultsContent.appendChild(ruleDiv);
+                        suspiciousTransactions.add(txId);
+                        hasSuspiciousActivity = true;
+                    }
                 }
             });
-        });
+
+            // --- Rule 3: Tumbling (Transaction Chains) ---
+            const transactionChain = {};
+            transactionStore.forEach(tx => {
+                if (transactionChain[tx.senderId]) {
+                    transactionChain[tx.senderId].push(tx.receiverId);
+                } else {
+                    transactionChain[tx.senderId] = [tx.receiverId];
+                }
+            });
+
+            const findChain = (startId, chain, visited) => {
+                if (visited.has(startId)) {
+                    return chain.length > 2 ? chain : null; // A chain must have at least 3 accounts
+                }
+                visited.add(startId);
+
+                if (transactionChain[startId] && transactionChain[startId].length > 0) {
+                    // Assuming the first receiver is the next link in the chain
+                    const nextId = transactionChain[startId][0];
+                    return findChain(nextId, [...chain, nextId], visited);
+                }
+                return null;
+            };
+
+            for (const sender in transactionChain) {
+                const chain = findChain(sender, [sender], new Set());
+                if (chain) {
+                    const ruleDiv = document.createElement('div');
+                    ruleDiv.className = 'bg-red-800 p-4 rounded-lg border-l-4 border-red-500';
+                    ruleDiv.innerHTML = `
+                        <p class="font-semibold text-lg text-red-300">Transaction Tumbling Detected</p>
+                        <p class="text-red-200">A chain of transactions was found: <strong>${chain.join(' &rarr; ')}</strong>. This is a common layering technique.</p>
+                    `;
+                    resultsContent.appendChild(ruleDiv);
+                    hasSuspiciousActivity = true;
+                }
+            }
+
+            // No suspicious activity detected
+            if (!hasSuspiciousActivity) {
+                const noActivityDiv = document.createElement('div');
+                noActivityDiv.className = 'bg-green-800 p-4 rounded-lg border-l-4 border-green-500';
+                noActivityDiv.innerHTML = `<p class="font-semibold text-lg text-green-300">No Suspicious Activity Detected</p>`;
+                resultsContent.appendChild(noActivityDiv);
+            }
+        }
+
+        function clearData() {
+            transactionStore.length = 0;
+            renderTransactions();
+            document.getElementById('resultsSection').classList.add('hidden');
+        }
+
+        // Initialize with some dummy data for demonstration
+        function addDummyData() {
+            const now = new Date();
+            const dummyData = [
+                { senderId: 'UserA', receiverId: 'UserB', amount: 9900, timestamp: new Date(now.getTime() - 1000 * 60 * 1) },
+                { senderId: 'UserA', receiverId: 'UserC', amount: 8800, timestamp: new Date(now.getTime() - 1000 * 60 * 2) },
+                { senderId: 'UserA', receiverId: 'UserD', amount: 9100, timestamp: new Date(now.getTime() - 1000 * 60 * 3) },
+                { senderId: 'UserA', receiverId: 'UserE', amount: 9500, timestamp: new Date(now.getTime() - 1000 * 60 * 4) },
+                { senderId: 'UserA', receiverId: 'UserF', amount: 9800, timestamp: new Date(now.getTime() - 1000 * 60 * 5) },
+                { senderId: 'UserX', receiverId: 'UserY', amount: 5000, timestamp: new Date(now.getTime() - 1000 * 60 * 6) },
+                { senderId: 'UserY', receiverId: 'UserZ', amount: 5000, timestamp: new Date(now.getTime() - 1000 * 60 * 7) },
+                { senderId: 'UserZ', receiverId: 'UserX', amount: 5000, timestamp: new Date(now.getTime() - 1000 * 60 * 8) },
+                { senderId: 'UserR', receiverId: 'UserS', amount: 1000, timestamp: new Date(now.getTime() - 1000 * 60 * 9) },
+                { senderId: 'UserS', receiverId: 'UserT', amount: 1000, timestamp: new Date(now.getTime() - 1000 * 60 * 10) },
+                { senderId: 'UserT', receiverId: 'UserU', amount: 1000, timestamp: new Date(now.getTime() - 1000 * 60 * 11) },
+            ];
+            dummyData.forEach(data => transactionStore.push({ ...data, category: 'transfer' }));
+            renderTransactions();
+        }
+
+        document.addEventListener('DOMContentLoaded', addDummyData);
     </script>
 </body>
 </html>
